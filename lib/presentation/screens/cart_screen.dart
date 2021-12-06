@@ -75,10 +75,6 @@ class _CartScreenState extends State<CartScreen> {
                               cartDetails.data!.items![index].cartitemaddon!
                                   .removeWhere((element) =>
                                       element.addon!.nameAr == null);
-                            // print(cartDetails
-                            //     .data!.items![0].cartitemaddon![1].addon!.nameAr);
-                            // print(cartDetails.data!.items![0].cartitemoption![0]
-                            //     .optionvalue!.nameAr);
                             return CartItem(
                               title:
                                   cartDetails.data!.items![index].productName,

@@ -32,7 +32,7 @@ class Data {
   var subTotal;
   int? discount;
   var tax;
-  var total;
+  String? total;
   int? quantity;
   String? deliveryFee;
   int? pointsToCash;
@@ -44,7 +44,7 @@ class Data {
         subTotal: json["sub_total"],
         discount: json["discount"],
         tax: json["tax"],
-        total: json["total"],
+        total: json["total"].toString(),
         quantity: json["quantity"],
         deliveryFee: json["delivery_fee"],
         pointsToCash: json["points_to_cash"],

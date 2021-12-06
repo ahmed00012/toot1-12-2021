@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -15,9 +16,14 @@ class ActivateAccountScreen extends StatefulWidget {
   final String? password;
   final String? name;
   final String? email;
+  final String? identityNumber;
 
   ActivateAccountScreen(
-      {required this.phone, this.email, this.password, this.name});
+      {required this.phone,
+      this.email,
+      this.password,
+      this.name,
+      this.identityNumber});
 
   @override
   State<ActivateAccountScreen> createState() => _ActivateAccountScreenState();
@@ -28,11 +34,11 @@ class _ActivateAccountScreenState extends State<ActivateAccountScreen> {
   String currentText = "";
   final formKey = GlobalKey<FormState>();
   TextEditingController textEditingController = TextEditingController();
+  var counter = DateTime.now().millisecondsSinceEpoch + 1000 * 60;
 
   _showDialog(BuildContext context, String title) {
     VoidCallback continueCallBack = () => {
           Navigator.of(context).pop(),
-          // code on continue comes here
         };
 
     BlurryDialog alert = BlurryDialog('خطأ', title, continueCallBack);
@@ -47,7 +53,7 @@ class _ActivateAccountScreenState extends State<ActivateAccountScreen> {
 
   Future<bool> _willPopCallback() async {
     BlocProvider.of<AuthCubit>(context).emit(AuthInitial());
-    return true; // return true if the route to be popped
+    return true;
   }
 
   @override
@@ -97,7 +103,6 @@ class _ActivateAccountScreenState extends State<ActivateAccountScreen> {
                           )));
             } else if (state is AuthError) {
               _showDialog(context, state.error);
-              print(state.error);
             }
           },
           child: SingleChildScrollView(
@@ -189,23 +194,56 @@ class _ActivateAccountScreenState extends State<ActivateAccountScreen> {
                                   email: widget.email,
                                   password: widget.password);
                           },
-                          // onTap: () {
-                          //   print("Pressed");
-                          // },
                           onChanged: (value) {
-                            print(value);
                             setState(() {
                               currentText = value;
                             });
                           },
                           beforeTextPaste: (text) {
-                            print("Allowing to paste $text");
-                            //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
-                            //but you can show anything you want here, like your pop up saying wrong paste format or etc
                             return true;
                           },
                         ),
                       ),
+                    ),
+                    SizedBox(
+                      height: 70,
+                    ),
+                    CountdownTimer(
+                      endTime: counter,
+                      widgetBuilder: (context, time) {
+                        return time != null
+                            ? Text(
+                                'لارسال الكود مرة اخرى برجاء الانتظار :  ${time.sec} ثانية',
+                                style: TextStyle(
+                                    color: Colors.black38,
+                                    fontWeight: FontWeight.bold),
+                              )
+                            : InkWell(
+                                onTap: () {
+                                  if (widget.name == null) {
+                                    BlocProvider.of<AuthCubit>(context)
+                                        .forgetPassword(phone: widget.phone);
+                                  } else
+                                    BlocProvider.of<AuthCubit>(context)
+                                        .register(
+                                            name: widget.name,
+                                            phone: widget.phone,
+                                            identityNo: widget.identityNumber,
+                                            password: widget.password,
+                                            confirmPassword: widget.password);
+
+                                  setState(() {
+                                    counter =
+                                        DateTime.now().millisecondsSinceEpoch +
+                                            1000 * 60;
+                                  });
+                                },
+                                child: Text('ارسال الكود مرة اخرى ',
+                                    style: TextStyle(
+                                        color: Color(Constants.mainColor),
+                                        fontWeight: FontWeight.bold)),
+                              );
+                      },
                     ),
                   ],
                 ),

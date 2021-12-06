@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:toot/cubits/auth_cubit/auth_cubit.dart';
 import 'package:toot/presentation/screens/forget_password.dart';
+import 'package:toot/presentation/screens/terms_and_conditions.dart';
 import 'package:toot/presentation/widgets/blurry_dialog.dart';
 import 'package:toot/presentation/widgets/buttom_nav_bar.dart';
 import 'package:toot/presentation/widgets/default_text_field.dart';
@@ -32,6 +33,7 @@ class _AuthScreenState extends State<AuthScreen> {
   };
   bool seePassword = false;
   bool seePassword1 = false;
+  bool agree = false;
 
   final _passwordController = TextEditingController();
 
@@ -130,10 +132,10 @@ class _AuthScreenState extends State<AuthScreen> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (_) => ActivateAccountScreen(
-                    phone: _authData['phone'],
-                    name: _authData['name'],
-                    password: _authData['password'],
-                  ),
+                      phone: _authData['phone'],
+                      name: _authData['name'],
+                      password: _authData['password'],
+                      identityNumber: _authData['identity_number']),
                 ),
               );
             }
@@ -199,7 +201,6 @@ class _AuthScreenState extends State<AuthScreen> {
                           }
                         },
                         onSaved: (val) {
-                          print(val);
                           _authData['phone'] = val!;
                         },
                       ),
@@ -213,7 +214,6 @@ class _AuthScreenState extends State<AuthScreen> {
                             return;
                           },
                           onSaved: (val) {
-                            print(val);
                             _authData['identity_number'] = val!;
                           },
                         ),
@@ -310,7 +310,6 @@ class _AuthScreenState extends State<AuthScreen> {
                                 fillColor: Color(0xffF0F4F8),
                                 suffixIcon: InkWell(
                                   onTap: () {
-                                    // Update the state i.e. toogle the state of passwordVisible variable
                                     setState(() {
                                       seePassword1 = !seePassword1;
                                     });
@@ -342,14 +341,72 @@ class _AuthScreenState extends State<AuthScreen> {
                                 : (val) {},
                           ),
                         ),
-                      TextButton(
-                          child: Text('هل نسيت كلمة المرور ؟'),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ForgetPassword()));
-                          }),
+
+                      if (_authMode == AuthMode.Signup)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                bottom: 23,
+                              ),
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    agree = !agree;
+                                  });
+                                },
+                                child: Image.asset(
+                                  agree
+                                      ? 'assets/images/checkbox.png'
+                                      : 'assets/images/blank-check-box.png',
+                                  color: Color(Constants.mainColor),
+                                  height: 25,
+                                  width: 25,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Expanded(
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ConditionsAndRules()));
+                                },
+                                child: Text(
+                                  'عن طريق تسجيلك للدخول معنا فإنك توافق على الشروط والاحكام الخاصة بنا',
+                                  textAlign: TextAlign.center,
+                                  maxLines: 3,
+                                  style: new TextStyle(
+                                    fontSize: 16.0,
+                                    color: Color(Constants.mainColor),
+                                    fontFamily: 'Tajawal',
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+
+                      if (_authMode == AuthMode.Signup)
+                        SizedBox(
+                          height: 30,
+                        ),
+
+                      if (_authMode == AuthMode.Login)
+                        TextButton(
+                            child: Text('هل نسيت كلمة المرور ؟'),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ForgetPassword()));
+                            }),
                       SizedBox(
                         width: 0.75.sw,
                         height: 50,
@@ -383,6 +440,9 @@ class _AuthScreenState extends State<AuthScreen> {
                         child: Text(
                             '${_authMode == AuthMode.Login ? 'تسجيل عضوية جديدة' : 'تسجيل الدخول'}'),
                         onPressed: _switchAuthMode,
+                      ),
+                      SizedBox(
+                        height: 80,
                       ),
                     ],
                   ),

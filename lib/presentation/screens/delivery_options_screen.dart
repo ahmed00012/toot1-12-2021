@@ -35,13 +35,12 @@ class _DeliveryOptionsScreenState extends State<DeliveryOptionsScreen> {
     } else {
       selections[index] = selection;
     }
-    print(selections);
+
     return selections;
   }
 
   @override
   void initState() {
-    print(widget.delivery);
     BlocProvider.of<CartCubit>(context).fetchDatesAndTimes(id: widget.id);
     super.initState();
   }
@@ -221,7 +220,8 @@ class _DeliveryOptionsScreenState extends State<DeliveryOptionsScreen> {
                             if (deliverySelections[0]) {
                               Navigator.of(context)
                                   .push(MaterialPageRoute(
-                                      builder: (_) => OrderSummaryScreen()))
+                                      builder: (_) => OrderSummaryScreen(
+                                          fastDelivery: true)))
                                   .then((value) =>
                                       BlocProvider.of<CartCubit>(context)
                                           .emit(InfoLoaded(info: info)));
@@ -233,8 +233,7 @@ class _DeliveryOptionsScreenState extends State<DeliveryOptionsScreen> {
 
                               Navigator.of(context)
                                   .push(MaterialPageRoute(
-                                      builder: (_) => OrderSummaryScreen(
-                                          delivery: widget.delivery)))
+                                      builder: (_) => OrderSummaryScreen()))
                                   .then((value) =>
                                       BlocProvider.of<CartCubit>(context)
                                           .emit(InfoLoaded(info: info)));

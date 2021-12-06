@@ -68,20 +68,17 @@ class _SingleItemScreenState extends State<SingleItemScreen> {
     }
     if (chosenExtra.contains(chosenId)) {
       chosenExtra.removeWhere((element) => element == chosenId);
-      print(chosenExtra);
       return;
     }
     chosenExtra.add(chosenId);
   }
 
   removeCart() async {
-    print(LocalStorage.getData(key: 'cart_token'));
     var response = await Dio().post('https://toot.work/api/cart/remove',
         data: {"cart_token": LocalStorage.getData(key: 'cart_token')},
         options: Options(headers: {
           "Authorization": "Bearer ${LocalStorage.getData(key: 'token')}",
         }));
-    print(response.data);
   }
 
   Future<bool> _showAnotherVendorDialog(int id, var optionId) async {
@@ -344,24 +341,20 @@ class _SingleItemScreenState extends State<SingleItemScreen> {
                                   color: Color(Constants.mainColor),
                                   fontSize: 16),
                               onChanged: (int? newValue) {
-                                print(newValue.toString() + 'rkhbgfryuhgb');
                                 setState(() {
                                   isChanged = true;
                                   state.optionId = newValue;
                                 });
-                                print(state.optionId);
                               },
                               items: item.options!
                                   .map<DropdownMenuItem<int>>((value) {
                                 return DropdownMenuItem<int>(
                                   value: value.id,
                                   onTap: () {
-                                    print(value.id.toString() + 'rkhbgfryuhgb');
                                     setState(() {
                                       price = double.parse(value.price!);
                                       state.optionId = value.id!;
                                     });
-                                    print(state.optionId);
                                   },
                                   child: Text(
                                     '${value.textAr}  ${value.price} SR ',
@@ -455,7 +448,6 @@ class _SingleItemScreenState extends State<SingleItemScreen> {
                               height: 0.07.sh,
                               child: ElevatedButton(
                                   onPressed: () {
-                                    print(state.optionId);
                                     if (widget.count == 0) {
                                       showSimpleNotification(
                                           Container(
@@ -636,7 +628,6 @@ class _BuildCheckboxListTileState extends State<BuildCheckboxListTile> {
         onChanged: (value) {
           setState(() {
             isAdded = value!;
-            print(isAdded);
             if (isAdded == true) {
               return widget.function(
                   widget.checkBoxState.price, true, widget.checkBoxState.id);

@@ -96,7 +96,6 @@ class _ReviewState extends State<Review> {
                   ),
                   onRatingUpdate: (rating) {
                     setState(() {
-                      print("XXXXXXX$rating");
                       branchRating = rating.toInt();
                     });
                   },
@@ -129,8 +128,6 @@ class _ReviewState extends State<Review> {
                     color: Colors.amber,
                   ),
                   onRatingUpdate: (rating) {
-                    print("XXXXXXX$rating");
-
                     setState(() {
                       foodRating = rating.toInt();
                     });
@@ -263,12 +260,6 @@ class _ReviewState extends State<Review> {
   }
 
   void senToRate() async {
-    print(widget.token);
-    print(widget.vendorID);
-    print(widget.orderId);
-    print(foodRating);
-    print(priceRating);
-    print(widget.token);
     var response = await http
         .post(Uri.parse("https://toot.work/api/rate/vendor"), headers: {
       "Authorization": "Bearer ${widget.token}",

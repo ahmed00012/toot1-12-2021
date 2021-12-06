@@ -34,18 +34,12 @@ class CartRepository {
 
   Future<dynamic> removeFromCart(
       {int? productId, String? cartToken, bool? lastItem}) async {
-    print(lastItem);
-
-    // FormData formData =
-    //     FormData.fromMap({'product_id': productId, 'cart_token': cartToken});
     return await cartWebServices.removeFromCart(productId, cartToken, lastItem);
   }
 
   Future<dynamic> fetchCart() async {
     final rawData = await cartWebServices.fetchCart();
-    print("rawData $rawData");
     if (rawData != null && rawData['success'] != "0") {
-      print(rawData['data']['token'].toString() + 'dfkdgiy');
       LocalStorage.saveData(
           key: 'cart_token', value: rawData['data']['token'].toString());
       return CartItem.fromJson(rawData);

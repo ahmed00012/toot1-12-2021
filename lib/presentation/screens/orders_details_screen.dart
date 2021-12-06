@@ -60,6 +60,8 @@ class _OrdersDetailsScreenState extends State<OrdersDetailsScreen> {
         ),
         body: BlocBuilder<CartCubit, CartState>(builder: (context, state) {
           if (state is OrderStatusLoaded) {
+            print(state.order.statusHistories);
+
             return Padding(
               padding: EdgeInsets.symmetric(horizontal: 0.04.sw),
               child: ListView(

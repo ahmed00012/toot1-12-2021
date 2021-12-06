@@ -48,7 +48,6 @@ class ProductWebServices {
 
       return response.data;
     } on DioError catch (e) {
-      print(e.toString());
       throw e.response!.data;
     }
   }
@@ -56,7 +55,6 @@ class ProductWebServices {
   Future<List<ItemDetails>> fetchBanner() async {
     Response response = await dio.get('sliders?limit=10');
     var body = response.data;
-    print(response.data);
     List<ItemDetails> items = [];
     for (int i = 0; i < body['data'].length; i++)
       items.add(ItemDetails.fromJson2(body['data'][i]));
@@ -68,7 +66,6 @@ class ProductWebServices {
       Response response = await dio.get('vendors/$shopId/categories');
       return response.data['categories'];
     } on DioError catch (e) {
-      print(e.response!.data);
       throw e.response!.data;
     }
   }
@@ -82,7 +79,7 @@ class ProductWebServices {
       log(response.data['data'].toString());
       return response.data['data'];
     } on DioError catch (e) {
-      print(e.response!.data);
+      ;
       throw e.response!.data;
     }
   }
@@ -95,7 +92,6 @@ class ProductWebServices {
       log(response.data.toString());
       return response.data['product'];
     } on DioError catch (e) {
-      print(e.response!.data);
       throw e.response!.data;
     }
   }
@@ -103,10 +99,8 @@ class ProductWebServices {
   Future<dynamic> fetchOffers(int pageNum) async {
     try {
       Response response = await dio.get('customer/notifications?page=$pageNum');
-      print(response.data['data']);
       return response.data['data'];
     } on DioError catch (e) {
-      print(e.response!.data);
       throw e.response!.data;
     }
   }

@@ -88,7 +88,6 @@ class ForgetPassword extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            print(_phone.text);
                             BlocProvider.of<AuthCubit>(context)
                                 .forgetPassword(phone: _phone.text);
                             Navigator.push(

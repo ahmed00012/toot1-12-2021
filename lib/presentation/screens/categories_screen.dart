@@ -59,85 +59,6 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         child: Scaffold(
           backgroundColor: Colors.grey.shade100,
           appBar: AppBar(
-            // title: Column(
-            //   children: [
-            //     Row(
-            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //       crossAxisAlignment: CrossAxisAlignment.center,
-            //       children: [
-            //         IconButton(
-            //           icon: Icon(
-            //             Icons.arrow_back,
-            //             size: 25,
-            //             color: Color(Constants.mainColor),
-            //           ),
-            //           onPressed: () {
-            //             Navigator.pushReplacement(
-            //                 context,
-            //                 MaterialPageRoute(
-            //                     builder: (context) => BottomNavBar()));
-            //           },
-            //         ),
-            //         Center(
-            //           child: Container(
-            //             width: 0.6.sw,
-            //             child: Text(
-            //               widget.shopName,
-            //               style: TextStyle(
-            //                 fontSize: 18,
-            //                 fontWeight: FontWeight.w400,
-            //                 color: Color(Constants.mainColor),
-            //               ),
-            //             ),
-            //           ),
-            //         ),
-            //         SizedBox(
-            //           width: 0.04.sw,
-            //         ),
-            //         InkWell(
-            //           onTap: () {
-            //             if (!isLogin)
-            //               Navigator.pushAndRemoveUntil(
-            //                   context,
-            //                   MaterialPageRoute(
-            //                       builder: (context) => AuthScreen()),
-            //                   (route) => false);
-            //             else
-            //               Navigator.push(
-            //                   context,
-            //                   MaterialPageRoute(
-            //                       builder: (context) => CartScreen()));
-            //           },
-            //           child: Padding(
-            //             padding: const EdgeInsets.only(right: 9.0, left: 9),
-            //             child: Badge(
-            //                 position: BadgePosition.topStart(),
-            //                 elevation: 5,
-            //                 badgeColor: Colors.white,
-            //                 badgeContent: Padding(
-            //                   padding: const EdgeInsets.only(top: 3.0),
-            //                   child: Text(
-            //                     counter!,
-            //                     style: TextStyle(
-            //                         fontWeight: FontWeight.bold,
-            //                         color: Colors.green[400]),
-            //                   ),
-            //                 ),
-            //                 child: Padding(
-            //                   padding: const EdgeInsets.only(
-            //                       top: 15.0, left: 2, right: 2),
-            //                   child: Icon(
-            //                     Icons.shopping_cart,
-            //                     size: 28,
-            //                     color: Colors.green[400],
-            //                   ),
-            //                 )),
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //   ],
-            // ),
             title: Text(
               widget.shopName,
               style: TextStyle(
@@ -196,7 +117,6 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 ),
               ),
             ],
-
             automaticallyImplyLeading: false,
             centerTitle: true,
             backgroundColor: Colors.white,

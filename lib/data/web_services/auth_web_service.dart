@@ -24,10 +24,8 @@ class AuthWebServices {
   Future<dynamic> register(FormData formData) async {
     try {
       Response response = await dio.post('auth/register', data: formData);
-      print(response.data.toString());
       return response.data['success'];
     } on DioError catch (e) {
-      print(e.response!.data);
       Map errors = e.response!.data['error'];
       if (errors.containsKey('phone') && errors.containsKey('email')) {
         throw ('البريد الالكتروني و رقم الهاتف مُستخدمان من قبل');
@@ -45,7 +43,6 @@ class AuthWebServices {
       log(response.data.toString());
       return response.data;
     } on DioError catch (e) {
-      print(e.response!.data);
       throw e.response!.data['message'];
     }
   }
@@ -62,9 +59,7 @@ class AuthWebServices {
   otp(FormData formData) async {
     try {
       Response response = await dio.post('auth/verify', data: formData);
-      print(response.data.toString());
       if (response.data['success'] == '1') {
-        print('bearer token');
         log(response.data.toString());
         return response.data;
       } else {
@@ -94,7 +89,6 @@ class AuthWebServices {
     try {
       Response response =
           await dio.post('auth/verify-forget-password', data: formData);
-      print(response.data);
       if (response.data['success'] == '1') {
         return true;
       } else {
@@ -109,7 +103,6 @@ class AuthWebServices {
   Future<bool> newPassword(FormData formData) async {
     try {
       Response response = await dio.post('auth/new-password', data: formData);
-      print(response.data);
       if (response.data['success'] == '1') {
         return true;
       } else {
@@ -128,9 +121,7 @@ class AuthWebServices {
           options: Options(headers: {
             "Authorization": "Bearer ${LocalStorage.getData(key: 'token')}",
           }));
-
       if (response.data['success'] == '1') {
-        print(response.data.toString());
         return true;
       } else {
         throw response.data['message'];

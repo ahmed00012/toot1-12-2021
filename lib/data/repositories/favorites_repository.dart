@@ -7,7 +7,6 @@ class FavoritesRepository {
   FavoritesRepository(this.favoritesWebServices);
 
   Future<bool> toggleFavoriteStatus({int? itemId, int? vendorId}) async {
-    print(itemId);
     FormData formData =
         FormData.fromMap({'product_id': itemId, "vendor_id": vendorId});
     return await favoritesWebServices.toggleFavoriteStatus(formData);

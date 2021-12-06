@@ -14,8 +14,8 @@ import '../../constants.dart';
 import 'order_confirmation.dart';
 
 class OrderSummaryScreen extends StatefulWidget {
-  String? delivery;
-  OrderSummaryScreen({this.delivery});
+  bool? fastDelivery;
+  OrderSummaryScreen({this.fastDelivery});
   @override
   State<OrderSummaryScreen> createState() => _OrderSummaryScreenState();
 }
@@ -28,7 +28,6 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
 
   @override
   void initState() {
-    print(widget.delivery);
     BlocProvider.of<CartCubit>(context).fetchCart();
     super.initState();
   }
@@ -58,7 +57,6 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
               url = state.url;
             });
             if (url != '') {
-              print(url);
               Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -74,6 +72,10 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
           if (state is CartLoaded) {
             final cartDetails = state.cartDetails;
             final paymentsMethods = state.payments;
+            var discount = cartDetails.data!.discount ?? 0;
+            String? total = cartDetails.data!.total;
+            double totalBefore = discount.toDouble() + double.parse(total!);
+
             return SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.only(
@@ -200,8 +202,29 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                                   width: 0.35.sw,
                                   height: 0.042.sh,
                                   child: ElevatedButton(
-                                    onPressed: () =>
-                                        discountModalBottomSheetMenu(context),
+                                    onPressed: () {
+                                      if (selectionMethod == '')
+                                        showSimpleNotification(
+                                            Container(
+                                              height: 55,
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 8.0),
+                                                child: Text(
+                                                  'من فضلك اختر طريقة الدفع اولا',
+                                                  style: TextStyle(
+                                                      color: Colors.indigo,
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                            ),
+                                            duration: Duration(seconds: 3),
+                                            background: Colors.white);
+                                      else
+                                        discountModalBottomSheetMenu(context);
+                                    },
                                     child: Text(
                                       'اضافة رمز ترويجي',
                                       style: TextStyle(
@@ -267,14 +290,14 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                                 fontSize: 16.sp,
                                 color: Colors.blueGrey.shade400),
                           ),
-                          widget.delivery.toString() == "null"
-                              ? Text('SR ${cartDetails.data!.deliveryFee}',
+                          widget.fastDelivery == null
+                              ? Text(
+                                  'SR ${int.parse(cartDetails.data!.deliveryFee!) - int.parse(cartDetails.data!.fastDelivery!)}',
                                   style: TextStyle(
                                       fontSize: 16.sp,
                                       color: Colors.blueGrey.shade400,
                                       fontWeight: FontWeight.w600))
-                              : Text(
-                                  'SR ${int.parse(cartDetails.data!.deliveryFee!) - int.parse(widget.delivery!)}',
+                              : Text('SR ${cartDetails.data!.deliveryFee!}',
                                   style: TextStyle(
                                       fontSize: 16.sp,
                                       color: Colors.blueGrey.shade400,
@@ -295,7 +318,28 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                                       fontSize: 16.sp,
                                       color: Colors.blueGrey.shade400),
                                 ),
-                                Text('SR ${cartDetails.data!.discount}',
+                                Text('SR -${cartDetails.data!.discount}',
+                                    style: TextStyle(
+                                        fontSize: 16.sp,
+                                        color: Colors.blueGrey.shade400,
+                                        fontWeight: FontWeight.w600))
+                              ],
+                            ),
+                          ),
+                    cartDetails.data!.discount.toString() == "null"
+                        ? Container()
+                        : Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'المجموع قبل الخصم',
+                                  style: TextStyle(
+                                      fontSize: 16.sp,
+                                      color: Colors.blueGrey.shade400),
+                                ),
+                                Text('SR ${totalBefore.toStringAsFixed(2)}',
                                     style: TextStyle(
                                         fontSize: 16.sp,
                                         color: Colors.blueGrey.shade400,

@@ -108,7 +108,6 @@ class _DeliveryAddressesScreenState extends State<DeliveryAddressesScreen> {
               BuildIndigoButton(
                   title: 'استمرار',
                   function: () {
-                    print(id);
                     if (selections.contains(true)) {
                       BlocProvider.of<CartCubit>(context)
                           .selectAddress(addressId: id);

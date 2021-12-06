@@ -106,7 +106,6 @@ class _AddDeliveryScreenState extends State<AddDeliveryScreen> {
       lat = currentLocation!.latitude;
       lng = currentLocation!.longitude;
     });
-    print(lat.toString() + 'ggg');
   }
 
   Future<Position> locateUser() {
@@ -241,7 +240,6 @@ class _AddDeliveryScreenState extends State<AddDeliveryScreen> {
                                 lat = location.latitude;
                                 lng = location.longitude;
                               });
-                              print(lat);
                             },
                             initialCameraPosition: CameraPosition(
                               target: LatLng(currentLocation!.latitude,
