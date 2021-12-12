@@ -220,17 +220,17 @@ class _ActivateAccountScreenState extends State<ActivateAccountScreen> {
                               )
                             : InkWell(
                                 onTap: () {
-                                  if (widget.name == null) {
-                                    BlocProvider.of<AuthCubit>(context)
-                                        .forgetPassword(phone: widget.phone);
-                                  } else
-                                    BlocProvider.of<AuthCubit>(context)
-                                        .register(
-                                            name: widget.name,
-                                            phone: widget.phone,
-                                            identityNo: widget.identityNumber,
-                                            password: widget.password,
-                                            confirmPassword: widget.password);
+                                  // if (widget.name == null) {
+                                  BlocProvider.of<AuthCubit>(context)
+                                      .forgetPassword(phone: widget.phone);
+                                  // } else
+                                  //   BlocProvider.of<AuthCubit>(context)
+                                  //       .register(
+                                  //           name: widget.name,
+                                  //           phone: widget.phone,
+                                  //           identityNo: widget.identityNumber,
+                                  //           password: widget.password,
+                                  //           confirmPassword: widget.password);
 
                                   setState(() {
                                     counter =
