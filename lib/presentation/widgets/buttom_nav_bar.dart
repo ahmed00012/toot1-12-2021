@@ -126,7 +126,6 @@ class _BottomNavBarState extends State<BottomNavBar>
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification notification = message.notification!;
       AndroidNotification? android = message.notification!.android;
-      print('efweferw' + message.data.toString());
       if (notification != null && android != null) {
         final order =
             message.notification!.body!.replaceAll(RegExp('[^0-9]'), '');
@@ -365,7 +364,7 @@ class _BottomNavBarState extends State<BottomNavBar>
           FloatingActionButtonLocation.miniCenterDocked,
       extendBody: true,
       bottomNavigationBar: Container(
-        height: 70,
+        height: 75,
         child: AnimatedBottomNavigationBar.builder(
             itemCount: iconList.length,
             tabBuilder: (int index, bool isActive) {
