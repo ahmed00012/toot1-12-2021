@@ -365,7 +365,7 @@ class _BottomNavBarState extends State<BottomNavBar>
           FloatingActionButtonLocation.miniCenterDocked,
       extendBody: true,
       bottomNavigationBar: Container(
-        height: 70,
+        height: 85,
         child: AnimatedBottomNavigationBar.builder(
             itemCount: iconList.length,
             tabBuilder: (int index, bool isActive) {

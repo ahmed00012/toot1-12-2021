@@ -163,6 +163,7 @@ class CartCubit extends Cubit<CartState> {
         .selectPayment(
             cartToken: LocalStorage.getData(key: 'cart_token'), method: method)
         .then((value) {
+          print(value['url']);
       emit(PaymentAdded(method: method, url: value['url'] ?? ''));
     });
     emit(PaymentLoading());

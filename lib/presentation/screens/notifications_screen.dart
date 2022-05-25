@@ -30,10 +30,10 @@ class _NotificationScreenState extends State<NotificationScreen>
       print(newItems.length);
       final isLastPage = newItems.length < NotificationScreen._pageSize;
       if (isLastPage) {
-        _pagingController.appendLastPage(newItems, 'no');
+        _pagingController.appendLastPage(newItems, search:false);
       } else {
         final nextPageKey = pageKey + 1;
-        _pagingController.appendPage(newItems, nextPageKey, 'no');
+        _pagingController.appendPage(newItems, nextPageKey, search:false);
       }
     } catch (error) {
       _pagingController.error = error;

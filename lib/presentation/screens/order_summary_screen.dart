@@ -62,7 +62,7 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                   MaterialPageRoute(
                       builder: (context) => TelrWebView(
                             url: url,
-                          ))).then((value) {});
+                          )));
               BlocProvider.of<CartCubit>(context).fetchCart();
             } else
               BlocProvider.of<CartCubit>(context).confirmOrder();
@@ -380,7 +380,7 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                       child: InkWell(
                         onTap: () {
                           print(selectionMethod);
-                          if (int.parse(cartDetails.data!.deliveryFee!) != 0) {
+                       //   if (int.parse(cartDetails.data!.deliveryFee!) != 0) {
                             if (selectionMethod == '')
                               showSimpleNotification(
                                   Container(
@@ -401,23 +401,24 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                             else
                               BlocProvider.of<CartCubit>(context)
                                   .confirmOrder(method: selectionMethod);
-                          } else
-                            showSimpleNotification(
-                                Container(
-                                  height: 55,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(top: 8.0),
-                                    child: Text(
-                                      'عذرا موقعك خارج نطاق توصيل مقدم الخدمة',
-                                      style: TextStyle(
-                                          color: Colors.indigo,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                ),
-                                duration: Duration(seconds: 3),
-                                background: Colors.white);
+                        //  }
+                          // else
+                          //   showSimpleNotification(
+                          //       Container(
+                          //         height: 55,
+                          //         child: Padding(
+                          //           padding: const EdgeInsets.only(top: 8.0),
+                          //           child: Text(
+                          //             'عذرا موقعك خارج نطاق توصيل مقدم الخدمة',
+                          //             style: TextStyle(
+                          //                 color: Colors.indigo,
+                          //                 fontSize: 18,
+                          //                 fontWeight: FontWeight.bold),
+                          //           ),
+                          //         ),
+                          //       ),
+                          //       duration: Duration(seconds: 3),
+                          //       background: Colors.white);
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,

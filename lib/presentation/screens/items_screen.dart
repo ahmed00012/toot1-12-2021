@@ -129,11 +129,11 @@ class _ItemsScreenState extends State<ItemsScreen>
 
       final isLastPage = newItems.length < _pageSize;
       if (isLastPage) {
-        _pagingController.appendLastPage(newItems, 'no');
+        _pagingController.appendLastPage(newItems, search:false);
         newItems = [];
       } else {
         final nextPageKey = pageKey + 1;
-        _pagingController.appendPage(newItems, nextPageKey, 'no');
+        _pagingController.appendPage(newItems, nextPageKey, search:false);
         newItems = [];
       }
     } catch (error) {
@@ -158,11 +158,11 @@ class _ItemsScreenState extends State<ItemsScreen>
       print(newItems.length);
       final isLastPage = newItems.length < _pageSize;
       if (isLastPage) {
-        _pagingController.appendLastPage(newItems, 'yes');
+        _pagingController.appendLastPage(newItems, search:false);
         newItems = [];
       } else {
         final nextPageKey = pageKey + 1;
-        _pagingController.appendPage(newItems, nextPageKey, 'yes');
+        _pagingController.appendPage(newItems, nextPageKey, search:false);
         newItems = [];
       }
     } catch (error) {
@@ -183,11 +183,11 @@ class _ItemsScreenState extends State<ItemsScreen>
       newItems = rawData.map((item) => Item.fromJson(item)).toList();
       final isLastPage = newItems.length < _pageSize;
       if (isLastPage) {
-        _pagingController.appendLastPage(newItems, 'yes');
+        _pagingController.appendLastPage(newItems, search:true);
         newItems = [];
       } else {
         final nextPageKey = pageKey + 1;
-        _pagingController.appendPage(newItems, nextPageKey, 'yes');
+        _pagingController.appendPage(newItems, nextPageKey, search:true);
         newItems = [];
       }
     } catch (error) {

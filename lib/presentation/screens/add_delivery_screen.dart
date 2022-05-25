@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:lottie/lottie.dart' as lottie;
 import 'package:toot/constants.dart';
 import 'package:toot/cubits/cart_cubit/cart_cubit.dart';
 import 'package:toot/presentation/widgets/default_indigo_button.dart';
@@ -202,6 +203,9 @@ class _AddDeliveryScreenState extends State<AddDeliveryScreen> {
                   style: TextStyle(
                       color: Color(Constants.mainColor), fontSize: 16.sp),
                 ),
+                SizedBox(
+                  height: 10,
+                ),
                 TextField(
                   maxLines: 3,
                   controller: district,
@@ -255,7 +259,14 @@ class _AddDeliveryScreenState extends State<AddDeliveryScreen> {
                           ),
                         ),
                       )
-                    : Container(),
+                    : Column(
+                  children: [
+                    Center(
+                        child: CircularProgressIndicator()),
+                    SizedBox(height: 10,),
+                    Text('جاري تحميل الخريطة',style: TextStyle(color: Color(Constants.mainColor),fontSize: 14),)
+                  ],
+                ),
                 const SizedBox(height: 40),
                 Center(
                   child: BuildIndigoButton(

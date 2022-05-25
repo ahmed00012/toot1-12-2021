@@ -145,6 +145,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     FirebaseMessaging.instance.getToken().then((token) {
       LocalStorage.saveData(key: 'token_fcm', value: token);
+      print(token);
     });
     // fcmNotification();
     super.initState();
